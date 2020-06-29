@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center w-full h-full">
         <div class="w-2/3">
             <div style="height:45vh;" class="flex flex-col justify-end p-5 relative">
-                <div class="w-full p-3 mb-2 rounded shadow-md uppercase flex justify-between items-center bg-white"
+                <div class="w-full p-3 mb-2 rounded shadow-md uppercase flex justify-between items-center bg-white cursor-pointer"
                      v-on:click="setSecondsTo(step)"
                      v-for="step in pastSteps"
                      :class="isActual(step)"
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div style="height:45vh" class="flex flex-col justify-start p-5 overflow-hidden relative">
-                <div class="w-full p-3 mb-2 rounded shadow-md uppercase flex justify-between items-center bg-white"
+                <div class="w-full p-3 mb-2 rounded shadow-md uppercase flex justify-between items-center bg-white cursor-pointer"
                      v-on:click="setSecondsTo(step)"
                      v-for="step in futurSteps"
                      :class="isActual(step)"
