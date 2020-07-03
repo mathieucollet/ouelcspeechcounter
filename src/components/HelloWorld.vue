@@ -215,8 +215,9 @@
       },
       resume: function () {
         if (confirm("Est tu certain de vouloir remettre à zéro ?")) {
-          this.state = 'pause';
+          this.state = 'stop';
           this.totalSeconds = 0;
+          this.globalSeconds = 0;
           this.steps.map(step => {
             step.current = false;
             step.past = false;
