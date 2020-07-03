@@ -57,8 +57,7 @@
     data: function () {
       return {
         steps: [
-          {id: 1, past: true, current: true, name: 'Baptiste : Création soirée', start: 0, end: 60},
-          {id: 2, past: false, current: false, name: 'Baptiste : Remplir au jury', start: 60, end: 240},
+          {id: 2, past: false, current: false, name: 'Baptiste : Anglais', start: 0, end: 240},
           {id: 3, past: false, current: false, name: 'Mathieu : Présentation Jérémy', start: 240, end: 270},
           {id: 4, past: false, current: false, name: 'Jérémy : Présentation Margaux', start: 270, end: 300},
           {id: 5, past: false, current: false, name: 'Margaux : Présentation Baptiste', start: 300, end: 330},
@@ -73,10 +72,10 @@
           {id: 14, past: false, current: false, name: 'Jérémy : Front', start: 900, end: 1140},
           {id: 15, past: false, current: false, name: 'Mathieu : Back', start: 1140, end: 1380},
           {id: 16, past: false, current: false, name: 'Jérémy : Tests', start: 1380, end: 1440},
-          {id: 17, past: false, current: false, name: 'Baptiste : A voir ??', start: 1440, end: 1560},
-          {id: 18, past: false, current: false, name: 'Baptiste : A voir ??', start: 1560, end: 1620},
-          {id: 19, past: false, current: false, name: 'Baptiste : A voir ??', start: 1620, end: 1740},
-          {id: 20, past: false, current: false, name: 'Coraléane : A voir ??', start: 1740, end: 1860},
+          {id: 17, past: false, current: false, name: 'Baptiste : Secteurs et tendances', start: 1440, end: 1560},
+          {id: 18, past: false, current: false, name: 'Baptiste : Concurrents', start: 1560, end: 1620},
+          {id: 19, past: false, current: false, name: 'Baptiste : Business Model', start: 1620, end: 1740},
+          {id: 20, past: false, current: false, name: 'Coraléane : SWOT', start: 1740, end: 1860},
           {id: 21, past: false, current: false, name: 'Coraléane : Sur les réseaux sociaux', start: 1860, end: 2100},
           {id: 22, past: false, current: false, name: 'Margaux : Référencement', start: 2100, end: 2220},
           {id: 23, past: false, current: false, name: 'Jérémy : Ambassadeurs', start: 2220, end: 2280},
@@ -87,15 +86,11 @@
           {id: 28, past: false, current: false, name: 'Mathieu : V2 => Chat', start: 2580, end: 2610},
           {id: 29, past: false, current: false, name: 'Baptiste : V2 => Régional + coivoit', start: 2610, end: 2670},
           {id: 30, past: false, current: false, name: 'Coraléane : V2 => Blog', start: 2670, end: 2700},
-          {id: 31, past: false, current: false, name: 'Baptiste : Retours personnels', start: 2700, end: 2720},
-          {id: 32, past: false, current: false, name: 'Coraléane : Retours personnels', start: 2720, end: 2740},
-          {id: 33, past: false, current: false, name: 'Jérémy : Retours personnels', start: 2740, end: 2760},
-          {id: 34, past: false, current: false, name: 'Mathieu : Retours personnels', start: 2760, end: 2780},
-          {id: 35, past: false, current: false, name: 'Margaux : Retours personnels', start: 2780, end: 2820},
+          {id: 31, past: false, current: false, name: 'Margaux : Remerciements', start: 2700, end: 2720},
         ],
         state: 'pause',
         totalSeconds: 0,
-        duration: 2820,
+        duration: 2720,
       };
     },
     mounted() {
@@ -185,10 +180,10 @@
           step.past = false;
           step.current = true;
         }
-        if (this.totalSeconds < step.start && (step.start - this.totalSeconds) < 20) {
+        if (this.totalSeconds < step.start && (step.start - this.totalSeconds) < 120) {
           response = 'font-extrabold text-purple-500 text-2xl';
         }
-        if (this.totalSeconds < step.start && (step.start - this.totalSeconds) >= 20) {
+        if (this.totalSeconds < step.start && (step.start - this.totalSeconds) >= 120) {
           response = 'font-bold'
         }
         return response;
