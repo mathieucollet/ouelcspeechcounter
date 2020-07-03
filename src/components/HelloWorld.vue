@@ -17,7 +17,7 @@
                      v-for="step in currentStep"
                      :class="isActual(step)"
                      :key="step.name">
-                    <span>{{step.name}}</span>
+                    <span>{{step.name}}<br><span class="text-xl">{{step.txt}}</span></span>
                     <span class="text-6xl" v-html="remainingTime(step.start, step.end)"></span>
                 </div>
             </div>
@@ -57,36 +57,100 @@
     data: function () {
       return {
         steps: [
-          {id: 2, past: false, current: false, name: 'Baptiste : Anglais', start: 0, end: 240},
-          {id: 3, past: false, current: false, name: 'Mathieu : Présentation Jérémy', start: 240, end: 270},
-          {id: 4, past: false, current: false, name: 'Jérémy : Présentation Margaux', start: 270, end: 300},
-          {id: 5, past: false, current: false, name: 'Margaux : Présentation Baptiste', start: 300, end: 330},
-          {id: 6, past: false, current: false, name: 'Baptiste : Présentation Coraléane', start: 330, end: 360},
-          {id: 7, past: false, current: false, name: 'Coraléane : Présentation Mathieu', start: 360, end: 390},
-          {id: 8, past: false, current: false, name: 'Margaux : Génèse', start: 390, end: 450},
-          {id: 9, past: false, current: false, name: 'Mathieu : Cahier des charges', start: 450, end: 540},
-          {id: 10, past: false, current: false, name: 'Margaux : Gestion de projet', start: 540, end: 600},
-          {id: 11, past: false, current: false, name: 'Mathieu : Choix techniques', start: 600, end: 660},
-          {id: 12, past: false, current: false, name: 'Margaux : Le design', start: 660, end: 840},
-          {id: 13, past: false, current: false, name: 'Margaux : Design System', start: 840, end: 900},
-          {id: 14, past: false, current: false, name: 'Jérémy : Front', start: 900, end: 1140},
-          {id: 15, past: false, current: false, name: 'Mathieu : Back', start: 1140, end: 1380},
-          {id: 16, past: false, current: false, name: 'Jérémy : Tests', start: 1380, end: 1440},
-          {id: 17, past: false, current: false, name: 'Baptiste : Secteurs et tendances', start: 1440, end: 1560},
-          {id: 18, past: false, current: false, name: 'Baptiste : Concurrents', start: 1560, end: 1620},
-          {id: 19, past: false, current: false, name: 'Baptiste : Business Model', start: 1620, end: 1740},
-          {id: 20, past: false, current: false, name: 'Coraléane : SWOT', start: 1740, end: 1860},
-          {id: 21, past: false, current: false, name: 'Coraléane : Sur les réseaux sociaux', start: 1860, end: 2100},
-          {id: 22, past: false, current: false, name: 'Margaux : Référencement', start: 2100, end: 2220},
-          {id: 23, past: false, current: false, name: 'Jérémy : Ambassadeurs', start: 2220, end: 2280},
-          {id: 24, past: false, current: false, name: 'Baptiste : Soirée de lancement', start: 2280, end: 2400},
-          {id: 25, past: false, current: false, name: 'Margaux : Partenaires', start: 2400, end: 2460},
-          {id: 26, past: false, current: false, name: 'Margaux : V2 => Ohplanet', start: 2460, end: 2520},
-          {id: 27, past: false, current: false, name: 'Jérémy : V2 => Application mobile', start: 2520, end: 2580},
-          {id: 28, past: false, current: false, name: 'Mathieu : V2 => Chat', start: 2580, end: 2610},
-          {id: 29, past: false, current: false, name: 'Baptiste : V2 => Régional + coivoit', start: 2610, end: 2670},
-          {id: 30, past: false, current: false, name: 'Coraléane : V2 => Blog', start: 2670, end: 2700},
-          {id: 31, past: false, current: false, name: 'Margaux : Remerciements', start: 2700, end: 2720},
+          {id: 2, past: false, current: false, name: 'Baptiste : Anglais', start: 0, end: 240, txt: ''},
+          {id: 3, past: false, current: false, name: 'Mathieu : Présentation Jérémy', start: 240, end: 270, txt: ''},
+          {id: 4, past: false, current: false, name: 'Jérémy : Présentation Margaux', start: 270, end: 300, txt: ''},
+          {id: 5, past: false, current: false, name: 'Margaux : Présentation Baptiste', start: 300, end: 330, txt: ''},
+          {
+            id: 6,
+            past: false,
+            current: false,
+            name: 'Baptiste : Présentation Coraléane',
+            start: 330,
+            end: 360,
+            txt: ''
+          },
+          {id: 7, past: false, current: false, name: 'Coraléane : Présentation Mathieu', start: 360, end: 390, txt: ''},
+          {id: 8, past: false, current: false, name: 'Margaux : Génèse', start: 390, end: 450, txt: ''},
+          {
+            id: 9,
+            past: false,
+            current: false,
+            name: 'Mathieu : Cahier des charges',
+            start: 450,
+            end: 540,
+            txt: 'lien social - homeur/comeur - hozeil - macros - mineurs - bassin - pub'
+          },
+          {id: 10, past: false, current: false, name: 'Margaux : Gestion de projet', start: 540, end: 600, txt: ''},
+          {id: 11, past: false, current: false, name: 'Mathieu : Choix techniques', start: 600, end: 660, txt: ''},
+          {id: 12, past: false, current: false, name: 'Margaux : Le design', start: 660, end: 840, txt: ''},
+          {id: 13, past: false, current: false, name: 'Margaux : Design System', start: 840, end: 900, txt: ''},
+          {id: 14, past: false, current: false, name: 'Jérémy : Front', start: 900, end: 1140, txt: ''},
+          {
+            id: 15,
+            past: false,
+            current: false,
+            name: 'Mathieu : Back',
+            start: 1140,
+            end: 1380,
+            txt: 'Laravel - TDD - IC - Docs'
+          },
+          {id: 16, past: false, current: false, name: 'Jérémy : Tests', start: 1380, end: 1440, txt: ''},
+          {
+            id: 17,
+            past: false,
+            current: false,
+            name: 'Baptiste : Secteurs et tendances',
+            start: 1440,
+            end: 1560,
+            txt: ''
+          },
+          {id: 18, past: false, current: false, name: 'Baptiste : Concurrents', start: 1560, end: 1620, txt: ''},
+          {id: 19, past: false, current: false, name: 'Baptiste : Business Model', start: 1620, end: 1740, txt: ''},
+          {id: 20, past: false, current: false, name: 'Coraléane : SWOT', start: 1740, end: 1860, txt: ''},
+          {
+            id: 21,
+            past: false,
+            current: false,
+            name: 'Coraléane : Sur les réseaux sociaux',
+            start: 1860,
+            end: 2100,
+            txt: ''
+          },
+          {id: 22, past: false, current: false, name: 'Margaux : Référencement', start: 2100, end: 2220, txt: ''},
+          {id: 23, past: false, current: false, name: 'Jérémy : Ambassadeurs', start: 2220, end: 2280, txt: ''},
+          {
+            id: 24,
+            past: false,
+            current: false,
+            name: 'Baptiste : Soirée de lancement',
+            start: 2280,
+            end: 2400,
+            txt: ''
+          },
+          {id: 25, past: false, current: false, name: 'Margaux : Partenaires', start: 2400, end: 2460, txt: ''},
+          {id: 26, past: false, current: false, name: 'Margaux : V2 => Ohplanet', start: 2460, end: 2520, txt: ''},
+          {
+            id: 27,
+            past: false,
+            current: false,
+            name: 'Jérémy : V2 => Application mobile',
+            start: 2520,
+            end: 2580,
+            txt: ''
+          },
+          {id: 28, past: false, current: false, name: 'Mathieu : V2 => Chat', start: 2580, end: 2610, txt: ''},
+          {
+            id: 29,
+            past: false,
+            current: false,
+            name: 'Baptiste : V2 => Régional + coivoit',
+            start: 2610,
+            end: 2670,
+            txt: ''
+          },
+          {id: 30, past: false, current: false, name: 'Coraléane : V2 => Blog', start: 2670, end: 2700, txt: ''},
+          {id: 31, past: false, current: false, name: 'Margaux : Remerciements', start: 2700, end: 2720, txt: ''},
         ],
         state: 'pause',
         totalSeconds: 0,
