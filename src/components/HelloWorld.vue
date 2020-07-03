@@ -34,12 +34,13 @@
             </div>
         </div>
         <div class="w-1/3 ml-4 mr-8 flex flex-col justify-center items-center bg-white">
+            <h1 class="text-6xl font-black" id="globalTime" v-html="globalTime"></h1>
             <h1 class="text-6xl font-black" id="time" v-html="time"></h1>
             <h1 class="text-6xl font-black" id="reverseTime" v-html="reverseTime"></h1>
             <div class="pb-4">
                 <span class="tracking-wider text-white px-4 py-1 text-sm rounded leading-loose mx-2 font-semibold cursor-pointer"
                       :class="state === 'play' ? 'bg-orange-500 hover:bg-orange-600' : 'bg-green-500 hover:bg-green-600'"
-                      title="" v-on:click="state === 'pause' ? start() : pause()">
+                      title="" v-on:click="state === 'pause' || state === 'stop' ? start() : pause()">
                      <i class="fas" :class="state === 'play' ? 'fa-pause' : 'fa-play'" aria-hidden="true"></i> {{state === 'play' ? 'Pause' : 'Start'}}
                 </span>
                 <span class="tracking-wider text-white bg-red-500 hover:bg-red-600 px-4 py-1 text-sm rounded leading-loose mx-2 font-semibold cursor-pointer"
@@ -152,8 +153,9 @@
           {id: 30, past: false, current: false, name: 'Coraléane : V2 => Blog', start: 2670, end: 2700, txt: ''},
           {id: 31, past: false, current: false, name: 'Margaux : Remerciements', start: 2700, end: 2720, txt: ''},
         ],
-        state: 'pause',
+        state: 'stop',
         totalSeconds: 0,
+        globalSeconds: 0,
         duration: 2720,
       };
     },
@@ -163,6 +165,9 @@
     computed: {
       time: function () {
         return this.displayMinutes() + ' : ' + this.displaySeconds();
+      },
+      globalTime: function () {
+        return this.displayMinutes(this.globalSeconds) + ' : ' + this.displaySeconds(this.globalSeconds);
       },
       reverseTime: function () {
         return this.reverseMinutes() + ' : ' + this.reverseSeconds();
@@ -221,6 +226,9 @@
       increment: function () {
         if (this.state === 'play') {
           this.totalSeconds += 1;
+        }
+        if (this.state !== 'stop') {
+          this.globalSeconds += 1;
         }
       },
       remainingTime: function (start, end) {
