@@ -18,7 +18,7 @@
              v-for="step in currentStep"
              :class="isActual(step)"
              :key="step.name">
-          <span>{{ step.name }}<br><span class="text-xl">{{ step.txt }}</span></span>
+          <span class="w-10/12">{{ step.name }}<br><span class="text-xl">{{ step.text }}</span></span>
           <span class="text-6xl" v-html="remainingTime(step.start, step.end)"></span>
         </div>
       </div>
@@ -58,47 +58,20 @@
 </template>
 
 <script>
-const M = 'Margaux'
-const E = 'Evan'
-const El = 'Elyse'
-const V = 'Victor'
-const MC = 'Mathieu'
-const J = 'Jérémy'
-const T = 'Tous'
-const D = 'DEVS'
-
 export default {
   name: 'HelloWorld',
   data: function () {
     return {
-      steps: [
-        {id: 1, past: false, current: false, name: `${M} : Pitch / Problématique`, start: 0, end: 180, txt: ''},
-        {id: 2, past: false, current: false, name: `${E} : Unified`, start: 180, end: 360, txt: ''},
-        {id: 3, past: false, current: false, name: `${T} : Équipe`, start: 360, end: 480, txt: ''},
-        {id: 4, past: false, current: false, name: `${El} : Marché`, start: 480, end: 660, txt: ''},
-        {id: 5, past: false, current: false, name: `${V} : Concurrence`, start: 660, end: 780, txt: ''},
-        {id: 6, past: false, current: false, name: `${MC} : Interview`, start: 780, end: 900, txt: ''},
-        {id: 7, past: false, current: false, name: `${J} : Personas`, start: 900, end: 1020, txt: ''},
-        {id: 8, past: false, current: false, name: `${E} : Logo / Typo / Couleurs`, start: 1020, end: 1080, txt: ''},
-        {id: 9, past: false, current: false, name: `${M} : Design System`, start: 1080, end: 1380, txt: ''},
-        {id: 10, past: false, current: false, name: `${MC} : Wireframe`, start: 1380, end: 1440, txt: ''},
-        {id: 12, past: false, current: false, name: `${D} : Dev`, start: 1440, end: 1860, txt: ''},
-        {id: 13, past: false, current: false, name: `${V} : Contrainte juridique`, start: 1860, end: 1920, txt: ''},
-        {id: 14, past: false, current: false, name: `${El} : Business model`, start: 1920, end: 2100, txt: ''},
-        {id: 15, past: false, current: false, name: `${V} : Projection financière`, start: 2100, end: 2220, txt: ''},
-        {id: 16, past: false, current: false, name: `${El} + ${V} : Marketing`, start: 2220, end: 2400, txt: ''},
-        {id: 18, past: false, current: false, name: `${J} : Communication`, start: 2400, end: 2520, txt: ''},
-        {id: 18, past: false, current: false, name: `${V} : Référencement`, start: 2520, end: 2640, txt: ''},
-        {id: 19, past: false, current: false, name: `${El} : Commerciale`, start: 2640, end: 2820, txt: ''},
-        {id: 20, past: false, current: false, name: `${T} : Gestion de projet`, start: 2820, end: 3360, txt: ''},
-        {id: 21, past: false, current: false, name: `${J} : Conclusion`, start: 3360, end: 3480, txt: ''},
-        {id: 22, past: false, current: false, name: `${MC} + ${E} : Tests`, start: 3480, end: 3600, txt: ''},
-      ],
+      steps: [],
       state: 'stop',
       totalSeconds: 0,
       globalSeconds: 0,
-      duration: 3600,
+      duration: 0,
+      starting_duration: 0,
     };
+  },
+  beforeMount() {
+    this.getSegments()
   },
   mounted() {
     setInterval(this.increment, 1000);
@@ -124,6 +97,21 @@ export default {
     }
   },
   methods: {
+    async getSegments() {
+      const headers = new Headers()
+      headers.append("Authorization", process.env.VUE_APP_API_TOKEN)
+      const request = new Request(`${process.env.VUE_APP_BASE_URL}/segments?sort[0]=position:asc`, {method: "GET", headers})
+      const response = await fetch(request)
+      const { data } = await response.json()
+      this.steps = data.map((curr) => {
+        curr.attributes.start = this.starting_duration
+        this.starting_duration += curr.attributes.duration
+        curr.attributes.end = this.starting_duration
+        return {...curr.attributes, past: false, current: false}
+      })
+      console.log(this.steps)
+      this.duration = data.reduce((prev, curr) => prev + curr.attributes.duration, 0)
+    },
     displayMinutes: function (seconds = this.totalSeconds) {
       const min = Math.floor((seconds / 60) % 60);
       return min >= 10 ? min : '0' + min;
@@ -174,13 +162,10 @@ export default {
       }
     },
     remainingTime: function (start, end) {
-      let response = '';
       if (this.totalSeconds >= start && this.totalSeconds < end) {
-        response = this.displayMinutes(end - this.totalSeconds) + ' : ' + this.displaySeconds(end - this.totalSeconds)
-      } else {
-        response = this.displayMinutes(end - start) + ' : ' + this.displaySeconds(end - start);
+        return this.displayMinutes(end - this.totalSeconds) + ' : ' + this.displaySeconds(end - this.totalSeconds)
       }
-      return response;
+      return this.displayMinutes(end - start) + ' : ' + this.displaySeconds(end - start);
     },
     isActual: function (step) {
       let response = '';
@@ -202,7 +187,7 @@ export default {
       }
       return response;
     }
-  }
+  },
 }
 </script>
 
