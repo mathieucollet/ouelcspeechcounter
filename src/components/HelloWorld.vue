@@ -98,19 +98,35 @@ export default {
   },
   methods: {
     async getSegments() {
-      const headers = new Headers()
-      headers.append("Authorization", process.env.VUE_APP_API_TOKEN)
-      const request = new Request(`${process.env.VUE_APP_BASE_URL}/segments?sort[0]=position:asc`, {method: "GET", headers})
-      const response = await fetch(request)
-      const { data } = await response.json()
-      this.steps = data.map((curr) => {
-        curr.attributes.start = this.starting_duration
-        this.starting_duration += curr.attributes.duration
-        curr.attributes.end = this.starting_duration
-        return {...curr.attributes, past: false, current: false}
+      fetch(`${process.env.VUE_APP_BASE_URL}/api/auth/local`, {
+            method: 'post',
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              identifier: "mayeut@gmail.com",
+              password: 'abc123'
+            })
+          }
+      )
+      .then((response) => response.json())
+      .then((data) => {
+        fetch(`${process.env.VUE_APP_BASE_URL}/api/segments?sort[0]=position:asc`, {
+          headers: {
+            Authorization: `Bearer ${data.jwt}`
+          },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+              this.steps = data.data.map((curr) => {
+                curr.attributes.start = this.starting_duration
+                this.starting_duration += curr.attributes.duration
+                curr.attributes.end = this.starting_duration
+                return {...curr.attributes, past: false, current: false}
+              })
+              this.duration = data.data.reduce((prev, curr) => prev + curr.attributes.duration, 0)
+            })
       })
-      console.log(this.steps)
-      this.duration = data.reduce((prev, curr) => prev + curr.attributes.duration, 0)
     },
     displayMinutes: function (seconds = this.totalSeconds) {
       const min = Math.floor((seconds / 60) % 60);
