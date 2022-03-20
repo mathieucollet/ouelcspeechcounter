@@ -104,8 +104,8 @@ export default {
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              identifier: "mayeut@gmail.com",
-              password: 'abc123'
+              identifier: process.env.VUE_APP_IDENTIFIER,
+              password: process.env.VUE_APP_PASSWORD
             })
           }
       )
