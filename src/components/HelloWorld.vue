@@ -53,6 +53,26 @@
                      <i class="fas fa-stop" aria-hidden="true"></i> Reset
                 </span>
       </div>
+      <div class="pb-4">
+        <div>
+          Mathieu : {{ mathieu / 60}} minutes
+        </div>
+        <div>
+          Evan : {{ evan / 60}} minutes
+        </div>
+        <div>
+          Jérémy : {{ jeremy / 60}} minutes
+        </div>
+        <div>
+          Margaux : {{ margaux / 60}} minutes
+        </div>
+        <div>
+          Victor : {{ victor / 60}} minutes
+        </div>
+        <div>
+          Elyse : {{ elyse / 60 }} minutes
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +88,12 @@ export default {
       globalSeconds: 0,
       duration: 0,
       starting_duration: 0,
+      mathieu: 0,
+      evan: 0,
+      margaux: 0,
+      elyse: 0,
+      victor: 0,
+      jeremy: 0,
     };
   },
   beforeMount() {
@@ -125,6 +151,12 @@ export default {
                 return {...curr.attributes, past: false, current: false}
               })
               this.duration = data.data.reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.mathieu = data.data.filter((segment) => segment.attributes.name.includes('Mathieu')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.evan = data.data.filter((segment) => segment.attributes.name.includes('Evan')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.elyse = data.data.filter((segment) => segment.attributes.name.includes('Elyse')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.victor = data.data.filter((segment) => segment.attributes.name.includes('Victor')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.jeremy = data.data.filter((segment) => segment.attributes.name.includes('Jérémy')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
+              this.margaux = data.data.filter((segment) => segment.attributes.name.includes('Margaux')).reduce((prev, curr) => prev + curr.attributes.duration, 0)
             })
       })
     },
