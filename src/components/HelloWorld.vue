@@ -111,7 +111,7 @@ export default {
       )
       .then((response) => response.json())
       .then((data) => {
-        fetch(`${process.env.VUE_APP_BASE_URL}/api/segments?sort[0]=position:asc`, {
+        fetch(`${process.env.VUE_APP_BASE_URL}/api/segments?sort[0]=position:asc&pagination[pageSize]=60`, {
           headers: {
             Authorization: `Bearer ${data.jwt}`
           },
